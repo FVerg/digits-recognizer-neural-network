@@ -7,6 +7,7 @@
 
 import numpy as np
 from keras.models import load_model
+from keras.utils import plot_model
 
 # -----------------------------------------------------------------------------
 # Change the input file according to the number you want to predict.
@@ -20,7 +21,13 @@ X = dataset[:, 1:785]
 # Y is a ndarray containing whether the
 Y = dataset[:, 785]
 
+# -----------------------------------------------------------------------------
+# Change the input model according to the network you want to load
+# -----------------------------------------------------------------------------
 model = load_model("Models\model_0.h5")
+
+# Save to png the structure of the model
+# plot_model(model, to_file='model_0.png', show_shapes=True)
 
 # Choose the images to feed the network in order to predict their represented value
 predictions = model.predict(X[0:10])
