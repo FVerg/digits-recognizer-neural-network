@@ -54,4 +54,4 @@ print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 # ------------------------------------------------------------------------------
 # Change the output name depending on what number this NN has been trained on.
 # ------------------------------------------------------------------------------
-model.save("Models\model_2.hd5")
+model.save("Models\model_2.h5")
