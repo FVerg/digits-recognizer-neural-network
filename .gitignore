@@ -3,3 +3,4 @@ mnist_datasets2
 *.pyc
 __pycache__
 *.csv
+.ipynb_checkpoints
