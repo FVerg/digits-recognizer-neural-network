@@ -12,6 +12,14 @@ import numpy as np
 
 np.random.seed(7)
 
+# ------------------------------------------------------------------------------
+# Select the number you want to train the network to recognize
+# ------------------------------------------------------------------------------
+rec_number = 9
+
+# ------------------------------------------------------------------------------
+# Set the network parameters
+# ------------------------------------------------------------------------------
 INPUT_NEURONS = 784
 HIDDEN_NEURONS = 10
 OUTPUT_NEURONS = 1
@@ -23,7 +31,7 @@ BATCH_SIZE = 10
 # - training_x: ClassLabel = 1 for number x
 # ------------------------------------------------------------------------------
 
-dataset = np.loadtxt(r"mnist_datasets2\training_2.csv", delimiter=',', skiprows=1)
+dataset = np.loadtxt(r"mnist_datasets2\training_"+str(rec_number)+".csv", delimiter=',', skiprows=1)
 
 X = dataset[:, 1:785]
 Y = dataset[:, 785]
@@ -54,4 +62,4 @@ print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 # ------------------------------------------------------------------------------
 # Change the output name depending on what number this NN has been trained on.
 # ------------------------------------------------------------------------------
-model.save("Models\model_2.h5")
+model.save("Models\model_"+str(rec_number)+".h5")
