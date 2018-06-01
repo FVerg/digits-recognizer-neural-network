@@ -18,19 +18,41 @@ dataset = np.loadtxt(r"mnist_datasets2\test_0.csv", delimiter=',', skiprows=1)
 
 # X is a ndarray containing all the test set images
 X = dataset[:, 1:785]
-# Y is a ndarray containing whether the
+# Y is a ndarray containing whether the image is a number or not
 Y = dataset[:, 785]
+
+# -----------------------------------------------------------------------------
+# Dictionary containing ndarray for labels of each number in test set
+# labels[0]: For each of the 10k test images: 1 if it is a 0, 0 if it is not
+# labels[1]: For each of the 10k test images: 1 if it is a 1, 0 if it is not
+# [...]
+# -----------------------------------------------------------------------------
+labels = {0: Y, 1: None, 2: None, 3: None, 4: None,
+          5: None, 6: None, 7: None, 8: None, 9: None}
+
+print("L'elemento ", 0, "ha ", len(labels[0]), " labels")
+for i in range(1, 10):
+    dataset = np.loadtxt(r"mnist_datasets2\test_"+str(i)+".csv", delimiter=',', skiprows=1)
+    labels[i] = dataset[:, 785]
+    print("L'elemento ", i, "ha ", len(labels[i]), " labels")
+
 
 # -----------------------------------------------------------------------------
 # Change the input model according to the network you want to load
 # -----------------------------------------------------------------------------
-model = load_model("Models\model_0.h5")
+models = {0: None, 1: None, 2: None, 3: None, 4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
+for i in range(0, 10):
+    models[i] = load_model("Models\model_"+str(i)+".h5")
+#model = load_model("Models\model_0.h5")
 
 # Save to png the structure of the model
 # plot_model(model, to_file='model_0.png', show_shapes=True)
 
 # Choose the images to feed the network in order to predict their represented value
-predictions = model.predict(X[0:10])
+predictions = {0: None, 1: None, 2: None, 3: None,
+               4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
+for i in range(0, 10):
+    predictions[i] = models[i].predict(X[0:10])
 
 # Some debug prints, can be ignored.
 print("X[0] : ", X[0], " len(X[0]): ", len(X[0]))
@@ -38,5 +60,11 @@ print("Input data: ", len(X))
 print("Predictions: ", len(predictions))
 
 # round predictions
-rounded = [round(x[0]) for x in predictions]
-print(rounded)
+
+rounded_predictions = {0: None, 1: None, 2: None, 3: None,
+                       4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
+
+for i in range(0, 10):
+    rounded_predictions[i] = [round(x[0]) for x in predictions[i]]
+
+print(rounded_predictions)
