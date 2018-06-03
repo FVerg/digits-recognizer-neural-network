@@ -30,11 +30,11 @@ Y = dataset[:, 785]
 labels = {0: Y, 1: None, 2: None, 3: None, 4: None,
           5: None, 6: None, 7: None, 8: None, 9: None}
 
-print("L'elemento ", 0, "ha ", len(labels[0]), " labels")
+#print("L'elemento ", 0, "ha ", len(labels[0]), " labels")
 for i in range(1, 10):
     dataset = np.loadtxt(r"mnist_datasets2\test_"+str(i)+".csv", delimiter=',', skiprows=1)
     labels[i] = dataset[:, 785]
-    print("L'elemento ", i, "ha ", len(labels[i]), " labels")
+    #print("L'elemento ", i, "ha ", len(labels[i]), " labels")
 
 
 # -----------------------------------------------------------------------------
@@ -52,12 +52,11 @@ for i in range(0, 10):
 predictions = {0: None, 1: None, 2: None, 3: None,
                4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
 for i in range(0, 10):
-    predictions[i] = models[i].predict(X[0:10])
+    predictions[i] = models[i].predict(X)
 
 # Some debug prints, can be ignored.
 print("X[0] : ", X[0], " len(X[0]): ", len(X[0]))
-print("Input data: ", len(X))
-print("Predictions: ", len(predictions))
+
 
 # round predictions
 
@@ -67,4 +66,22 @@ rounded_predictions = {0: None, 1: None, 2: None, 3: None,
 for i in range(0, 10):
     rounded_predictions[i] = [round(x[0]) for x in predictions[i]]
 
-print(rounded_predictions)
+predicted_labels = np.zeros(10000, dtype=int)
+
+# Retrieving outputs from the neural networks
+for i in range(0, 10):
+    for j in range(0, 10000):
+        if (rounded_predictions[i][j] == 1.0 and predicted_labels[j] == 0):
+            predicted_labels[j] = i
+
+base = np.loadtxt(r"mnist_datasets2\test_base.csv", delimiter=',', skiprows=1)
+correct_labels = base[:, 785]
+
+errors = 0
+for i, j in zip(predicted_labels, correct_labels):
+    print("Predicted: ", i, " - Correct: ", j)
+    if i != j:
+        errors = errors+1
+print(errors, " mistaken prediction over a test set of 10000 elements")
+print("Accuracy = ", ((10000-errors)/10000)*100, "%")
+# print(rounded_predictions)
