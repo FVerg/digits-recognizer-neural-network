@@ -77,10 +77,11 @@ for i in range(0, 10):
 base = np.loadtxt(r"mnist_datasets2\test_base.csv", delimiter=',', skiprows=1)
 correct_labels = base[:, 785]
 
+# Calculate accuracy
 errors = 0
 for i, j in zip(predicted_labels, correct_labels):
-    print("Predicted: ", i, " - Correct: ", j)
-    if i != j:
+    print("Predicted: ", i, " - Correct: ", int(j))
+    if i != int(j):
         errors = errors+1
 print(errors, " mistaken prediction over a test set of 10000 elements")
 print("Accuracy = ", ((10000-errors)/10000)*100, "%")
