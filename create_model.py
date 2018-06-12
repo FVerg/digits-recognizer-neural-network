@@ -41,7 +41,7 @@ model = Sequential()
 # Layer 1 - Input: 784 Neurons
 model.add(Dense(INPUT_NEURONS, input_dim=INPUT_NEURONS, activation='relu'))
 # Layer 2 - Hidden: 10 Neurons
-model.add(Dense(20, activation='sigmoid'))
+model.add(Dense(HIDDEN_NEURONS, activation='sigmoid'))
 # Layer 3 - Output: 1 Neuron (T/F)
 model.add(Dense(OUTPUT_NEURONS, activation='sigmoid'))
 
@@ -62,4 +62,4 @@ print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 # ------------------------------------------------------------------------------
 # Change the output name depending on what number this NN has been trained on.
 # ------------------------------------------------------------------------------
-model.save("Models\model_"+str(rec_number)+"bis.h5")
+# model.save("Models\model_"+str(rec_number)+".h5")
