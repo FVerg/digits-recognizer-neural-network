@@ -48,36 +48,43 @@ for i in range(0, 10):
 # Save to png the structure of the model
 # plot_model(model, to_file='model_0.png', show_shapes=True)
 
-# Choose the images to feed the network in order to predict their represented value
+# Executing the models to predict the numbers in input
 predictions = {0: None, 1: None, 2: None, 3: None,
                4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
 for i in range(0, 10):
     predictions[i] = models[i].predict(X)
 
 # Some debug prints, can be ignored.
-print("X[0] : ", X[0], " len(X[0]): ", len(X[0]))
+# print("X[0] : ", X[0], " len(X[0]): ", len(X[0]))
 
-
-# round predictions
-
-rounded_predictions = {0: None, 1: None, 2: None, 3: None,
-                       4: None, 5: None, 6: None, 7: None, 8: None, 9: None}
-
-for i in range(0, 10):
-    rounded_predictions[i] = [round(x[0]) for x in predictions[i]]
+print("Un elemento di predictions è di tipo ", type(predictions[0]))
 
 predicted_labels = np.zeros(10000, dtype=int)
 
-# Retrieving outputs from the neural networks
-for i in range(0, 10):
-    for j in range(0, 10000):
-        if (rounded_predictions[i][j] == 1.0 and predicted_labels[j] == 0):
+# ------------------------------------------------------------------------------
+# Retrieving the predictions from the NNs
+#  - Each neural network will output 0/1 whether the input number represent "his"
+#    number or not, with a certain probability.
+#  - We select from each NN the highest output: this way we choose the most probable
+#  - number, without needing rounding.
+# Example:
+#  - NN#0 = 0.01
+#  - NN#1 = 0.99
+# We select 1.
+# ------------------------------------------------------------------------------
+for j in range(0, 10000):
+    max = 0
+    max_i = None
+    for i in range(0, 10):
+        if (predictions[i][j] > max):
+            max = predictions[i][j]
+            max_i = i
             predicted_labels[j] = i
 
 base = np.loadtxt(r"mnist_datasets2\test_base.csv", delimiter=',', skiprows=1)
 correct_labels = base[:, 785]
 
-# Calculate accuracy edf
+# Calculate accuracy
 errors = 0
 for i, j in zip(predicted_labels, correct_labels):
     print("Predicted: ", i, " - Correct: ", int(j))
