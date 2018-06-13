@@ -78,6 +78,7 @@ base = np.loadtxt(r"mnist_datasets2\test_base.csv", delimiter=',', skiprows=1)
 correct_labels = base[:, 785]
 
 # Calculate accuracy edf
+# Git develop branch
 errors = 0
 for i, j in zip(predicted_labels, correct_labels):
     print("Predicted: ", i, " - Correct: ", int(j))
