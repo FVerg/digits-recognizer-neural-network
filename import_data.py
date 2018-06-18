@@ -1,5 +1,10 @@
+# ------------------------------------------------------------------------------
+# This script imports data and formats it in order to be used from our complex
+# neural network, requiring {0,1} labels.
+# ------------------------- W A R N I N G --------------------------------------
 # This snippet has to be run in Python 2.7, since load_data has been written
 # using Python 2.7 and cPickle.
+# ------------------------------------------------------------------------------
 
 from mnist_loader import load_data
 import pandas as pd
